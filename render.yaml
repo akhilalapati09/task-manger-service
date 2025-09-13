@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: task-manager-service
+    env: docker
+    build:
+      dockerfile: Dockerfile.prod
+    envVars:
+      - key: QUARKUS_HTTP_PORT
+        value: 8080
+      - key: QUARKUS_DATASOURCE_JDBC_URL
+        fromDatabase:
+          name: taskmanagerdb
+          property: connectionString
+      - key: QUARKUS_DATASOURCE_USERNAME
+        fromDatabase:
+          name: taskmanagerdb
+          property: username
+      - key: QUARKUS_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: taskmanagerdb
+          property: password
+    plan: free
+    numInstances: 1
+
+databases:
+  - name: taskmanagerdb
+    plan: free
+    databaseName: taskmanager
+    user: taskmanager_user

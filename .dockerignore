@@ -1,0 +1,43 @@
+# Maven
+target/
+!target/*.jar
+!target/*.war
+!target/*.ear
+!target/*.zip
+!target/*.tar.gz
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build output
+**/target/
+**/build/
+
+# Logs
+*.log
+
+# Local configuration
+*.properties
+*.yml
+*.yaml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+mvnw.cmd
+mvnw
