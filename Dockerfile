@@ -1,21 +1,27 @@
-FROM openjdk:21-jdk-slim
+# Stage 1: Build the application
+FROM maven:3.9.5-eclipse-temurin-21 AS build
+WORKDIR /workspace/app
 
+# Copy only the files needed for building
+COPY pom.xml .
+COPY src src/
+
+# Build the application
+RUN mvn clean package -DskipTests
+
+# Stage 2: Create the production image
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
+# Copy the built application from the build stage
+COPY --from=build /workspace/app/target/quarkus-app/lib/ /app/lib/
+COPY --from=build /workspace/app/target/quarkus-app/*.jar /app/
+COPY --from=build /workspace/app/target/quarkus-app/app/ /app/app/
+COPY --from=build /workspace/app/target/quarkus-app/quarkus/ /app/quarkus/
 
-# Download dependencies
-RUN ./mvnw dependency:go-offline -B
-
-# Copy source code
-COPY src src
-
-# Build application
-RUN ./mvnw clean package -DskipTests
-
-# Run application
+# Set the startup command to run the application
+ENV QUARKUS_HTTP_PORT=8080
 EXPOSE 8080
-CMD ["java", "-jar", "target/quarkus-app/quarkus-run.jar"]
+
+# Use shell form to enable environment variable substitution
+CMD ["java", "-jar", "quarkus-run.jar"]
