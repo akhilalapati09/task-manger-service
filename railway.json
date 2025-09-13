@@ -1,0 +1,9 @@
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "java -jar target/quarkus-app/quarkus-run.jar",
+    "healthcheckPath": "/q/health"
+  }
+}
