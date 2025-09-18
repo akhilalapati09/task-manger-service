@@ -8,8 +8,8 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "members")
-public class Member extends PanacheEntity {
+@Table(name = "team_members")
+public class TeamMember extends PanacheEntity {
     
     @Column(nullable = false)
     public String name;
@@ -24,10 +24,10 @@ public class Member extends PanacheEntity {
     public LocalDateTime createdAt;
     
     // Default constructor required by Hibernate
-    public Member() {
+    public TeamMember() {
     }
     
-    public Member(String name, String email, String role) {
+    public TeamMember(String name, String email, String role) {
         this.name = name;
         this.email = email;
         this.role = role;

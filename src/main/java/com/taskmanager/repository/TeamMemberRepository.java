@@ -1,13 +1,13 @@
 package com.taskmanager.repository;
 
-import com.taskmanager.model.Member;
+import com.taskmanager.model.TeamMember;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class MemberRepository implements PanacheRepository<Member> {
+public class TeamMemberRepository implements PanacheRepository<TeamMember> {
     
-    public Member findByEmail(String email) {
+    public TeamMember findByEmail(String email) {
         return find("email", email).firstResult();
     }
     

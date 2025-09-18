@@ -1,40 +1,40 @@
 package com.taskmanager.controller;
 
-import com.taskmanager.model.Member;
-import com.taskmanager.service.MemberService;
+import com.taskmanager.model.TeamMember;
+import com.taskmanager.service.TeamMemberService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/api/members")
+@Path("/api/team-members")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class MemberController {
+public class TeamMemberController {
 
     @Inject
-    MemberService memberService;
+    TeamMemberService teamMemberService;
 
     @GET
-    public List<Member> getAllMembers() {
-        return memberService.getAllMembers();
+    public List<TeamMember> getAllTeamMembers() {
+        return teamMemberService.getAllTeamMembers();
     }
 
     @GET
     @Path("/{id}")
-    public Response getMemberById(@PathParam("id") Long id) {
-        Member member = memberService.getMemberById(id);
-        if (member != null) {
-            return Response.ok(member).build();
+    public Response getTeamMemberById(@PathParam("id") Long id) {
+        TeamMember teamMember = teamMemberService.getTeamMemberById(id);
+        if (teamMember != null) {
+            return Response.ok(teamMember).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @POST
-    public Response createMember(Member member) {
+    public Response createTeamMember(TeamMember teamMember) {
         try {
-            Member created = memberService.createMember(member);
+            TeamMember created = teamMemberService.createTeamMember(teamMember);
             return Response.status(Response.Status.CREATED).entity(created).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -43,9 +43,9 @@ public class MemberController {
 
     @PUT
     @Path("/{id}")
-    public Response updateMember(@PathParam("id") Long id, Member member) {
+    public Response updateTeamMember(@PathParam("id") Long id, TeamMember teamMember) {
         try {
-            Member updated = memberService.updateMember(id, member);
+            TeamMember updated = teamMemberService.updateTeamMember(id, teamMember);
             if (updated != null) {
                 return Response.ok(updated).build();
             }
@@ -57,8 +57,8 @@ public class MemberController {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteMember(@PathParam("id") Long id) {
-        boolean deleted = memberService.deleteMember(id);
+    public Response deleteTeamMember(@PathParam("id") Long id) {
+        boolean deleted = teamMemberService.deleteTeamMember(id);
         if (deleted) {
             return Response.noContent().build();
         }
