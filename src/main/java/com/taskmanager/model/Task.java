@@ -22,8 +22,10 @@ public class Task extends PanacheEntity {
     public Status status = Status.TODO;
     
     public LocalDate dueDate;
-    
-    public String assignedTo;
+
+    @ManyToOne
+    @JoinColumn(name = "assigned_to_id")
+    public TeamMember assignedTo;
     
     @ManyToOne
     @JoinColumn(name = "project_id")
